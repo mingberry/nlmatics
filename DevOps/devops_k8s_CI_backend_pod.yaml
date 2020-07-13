@@ -1,0 +1,32 @@
+#----devops_k8s_CI_backend_pod.yaml----#
+# 
+# To create "backend" Pod based on the same name docker image.
+#
+# The CPU and Memory usage limits are as below:
+# CPU between 10% and 100%
+# Memory between 128 MB and 2 GB
+# 
+# For ReplicaSet creation, go to: devops_k8s_CI_backend_rs.yaml
+# 
+# Run below command to deploy in a Kubernetes cluster:
+# $ kubectl apply -f devops_k8s_CI_backend_pod.yaml
+#
+# To Remove the Pod from the cluster to run:
+# $ kubectl delete -f devops_k8s_CI_backend_pod.yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend
+spec:
+  containers:
+    - image: nlmatics/devops:backend
+      name: backend
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "1000m"
+          memory: "2048Mi"
+#--------------End-------------------#

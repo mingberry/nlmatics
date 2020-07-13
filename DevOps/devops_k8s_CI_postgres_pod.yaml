@@ -1,0 +1,40 @@
+#----devops_k8s_CI_postgres_pod.yaml----#
+# 
+# To create "postgres" Pod based on the same name docker image.
+#
+# The CPU and Memory usage limits are as below:
+# CPU copping at 100% (the actually effect equals to not specified)
+# Memory requests and limits are not specified.
+# 
+# PostgreSQL database files must be in a persistent volume which
+# resides on the K8s Worker Node.
+# The simulation here is Progres Container's /mnt mount on local drive
+# at /home/ming/NLMatics/PostgresData
+# 
+# For ReplicaSet creation, go to: devops_k8s_CI_postgres_rs.yaml
+# 
+# Run below command to deploy in a Kubernetes cluster:
+# $ kubectl apply -f devops_k8s_CI_postgres_pod.yaml
+#
+# To Remove the Pod from the cluster to run:
+# $ kubectl delete -f devops_k8s_CI_postgres_pod.yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres
+spec:
+  volumes:
+    - name: "postgres-data"
+      hostPath:
+        path: "/home/ming/NLMatics/Postgres_Data"
+  containers:
+    - image: nlmatics/devops:postgres
+      name: postgres
+      volumeMounts:
+        - mountPath: "/mnt"
+          name: "postgres-data"
+      resources:
+        limits:
+          cpu: "1000m"
+#--------------End-------------------#

@@ -1,0 +1,31 @@
+#----devops_k8s_CI_frontend_pod.yaml----#
+# 
+# To create "frontend" Pod based on the same name docker image.
+#
+# The CPU and Memory usage limits are as below:
+# CPU between 10% and 100%
+# Memory capping at 512 MB, no minimum requests
+# 
+# For ReplicaSet creation, go to: devops_k8s_CI_frontend_rs.yaml
+# 
+# Run below command to deploy in a Kubernetes cluster:
+# $ kubectl apply -f devops_k8s_CI_frontend_pod.yaml
+#
+# To Remove the Pod from the cluster to run:
+# $ kubectl delete -f devops_k8s_CI_frontend_pod.yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+spec:
+  containers:
+    - image: nlmatics/devops:frontend
+      name: frontend
+      resources:
+        requests:
+          cpu: "100m"
+        limits:
+          cpu: "1000m"
+          memory: "512Mi"
+#--------------End-------------------#
