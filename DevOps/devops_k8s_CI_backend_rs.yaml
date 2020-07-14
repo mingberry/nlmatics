@@ -1,0 +1,30 @@
+#----devops_k8s_CI_backend_rs.yaml----#
+# 
+# To create "backend" ReplicaSet for the Pod with the same name.
+#
+# Run below command to add or adjust the Replica number:
+# $ kubectl apply -f devops_k8s_CI_backend_rs.yaml
+#
+# Run below command to remove it:
+# $ kubectl delete -f devops_k8s_CI_backend_rs.yaml
+#
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      version: "1"
+  template:
+    metadata:
+      labels:
+        app: backend
+        version: "1"
+    spec:
+      containers:
+        - name: backend
+          image: nlmatics/devops:backend
+#--------------End-------------------#

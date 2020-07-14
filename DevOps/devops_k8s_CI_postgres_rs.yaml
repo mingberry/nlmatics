@@ -1,0 +1,30 @@
+#----devops_k8s_CI_postgres_rs.yaml----#
+# 
+# To create "postgres" ReplicaSet for the Pod with the same name.
+#
+# Run below command to add or adjust the Replica number:
+# $ kubectl apply -f devops_k8s_CI_postgres_rs.yaml
+#
+# Run below command to remove it:
+# $ kubectl delete -f devops_k8s_CI_postgres_rs.yaml
+#
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: "1"
+  template:
+    metadata:
+      labels:
+        app: postgres
+        version: "1"
+    spec:
+      containers:
+        - name: postgres
+          image: nlmatics/devops:postgres
+#--------------End-------------------#
