@@ -1,0 +1,43 @@
+#---devops_k8s_CD_backend_deployment.yaml---#
+#-----------------------------------------#
+# ---Deployment "backend" setup:
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  labels:
+    app: backend
+  name: backend
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: backend
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubernetes.io/change-cause: "Initial Setup"
+      labels:
+        app: backend
+    spec:
+      containers:
+      - image: nlmatics/devops:backend
+        name: backend
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "512Mi"
+          limits:
+            cpu: "1000m"
+            memory: "2048Mi"
+#-------------------End-------------------#
